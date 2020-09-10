@@ -5,12 +5,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lagner2/widget/full_photo.dart';
 import 'package:lagner2/widget/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:translator/translator.dart';
 
 import 'const.dart';
 
@@ -42,8 +44,10 @@ class Chat extends StatelessWidget {
 class ChatScreen extends StatefulWidget {
   final String peerId;
   final String peerAvatar;
+  var message;
 
-  ChatScreen({Key key, @required this.peerId, @required this.peerAvatar})
+  ChatScreen(
+      {Key key, @required this.peerId, @required this.peerAvatar, this.message})
       : super(key: key);
 
   @override
@@ -72,6 +76,10 @@ class ChatScreenState extends State<ChatScreen> {
   final TextEditingController textEditingController = TextEditingController();
   final ScrollController listScrollController = ScrollController();
   final FocusNode focusNode = FocusNode();
+
+  GoogleTranslator translator = GoogleTranslator();
+  bool isTranslated = false;
+  var mensaje;
 
   _scrollListener() {
     if (listScrollController.offset >=
@@ -106,6 +114,9 @@ class ChatScreenState extends State<ChatScreen> {
     imageUrl = '';
 
     readLocal();
+    setState(() {
+      mensaje = widget.message;
+    });
   }
 
   void onFocusChange() {
@@ -209,6 +220,23 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  Future<String> translation(String message) async {
+    var newMessage;
+    if (this.isTranslated == false) {
+      isTranslated = true;
+      newMessage = await translator.translate(message, to: 'en');
+      print(isTranslated);
+      print(mensaje);
+    } else {
+      isTranslated = false;
+      newMessage = await translator.translate(message, to: 'es');
+      print(isTranslated);
+      print(mensaje);
+    }
+
+    return newMessage.toString();
+  }
+
   Widget buildItem(int index, DocumentSnapshot document) {
     if (document.data()['idFrom'] == id) {
       // Right (my message)
@@ -217,9 +245,43 @@ class ChatScreenState extends State<ChatScreen> {
           document.data()['type'] == 0
               // Text
               ? Container(
-                  child: Text(
-                    document.data()['content'],
-                    style: TextStyle(color: primaryColor),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.message = document.data()['content'],
+                          style: TextStyle(color: primaryColor),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          var newmessage = widget.message;
+                          try {
+                            newmessage = await translation(newmessage);
+                          } catch (e) {
+                            print(e.toString());
+
+                            newmessage = "No se puede traducir";
+                          }
+
+                          setState(() {
+                            widget.message = newmessage;
+                          });
+                        },
+                        child: Container(
+                            child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(colors: [
+                                      const Color(0xffADB6C4),
+                                      const Color(0xffADB6C4)
+                                    ]),
+                                    borderRadius: BorderRadius.circular(40)),
+                                padding: EdgeInsets.all(7),
+                                child: Icon(Icons.translate))),
+                      )
+                    ],
                   ),
                   padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
                   width: 200.0,
@@ -332,9 +394,44 @@ class ChatScreenState extends State<ChatScreen> {
                     : Container(width: 35.0),
                 document.data()['type'] == 0
                     ? Container(
-                        child: Text(
-                          document.data()['content'],
-                          style: TextStyle(color: Colors.white),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                document.data()['content'],
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                var newmessage = widget.message;
+                                try {
+                                  newmessage = await translation(newmessage);
+                                } catch (e) {
+                                  print(e.toString());
+
+                                  newmessage = "No se puede traducir";
+                                }
+
+                                setState(() {
+                                  widget.message = newmessage;
+                                });
+                              },
+                              child: Container(
+                                  child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(colors: [
+                                            const Color(0xffADB6C4),
+                                            const Color(0xffADB6C4)
+                                          ]),
+                                          borderRadius:
+                                              BorderRadius.circular(40)),
+                                      padding: EdgeInsets.all(7),
+                                      child: Icon(Icons.translate))),
+                            )
+                          ],
                         ),
                         padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
                         width: 200.0,

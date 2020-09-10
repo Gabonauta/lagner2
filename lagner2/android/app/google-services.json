@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "671769940695",
+    "firebase_url": "https://chatv2-909a6.firebaseio.com",
+    "project_id": "chatv2-909a6",
+    "storage_bucket": "chatv2-909a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671769940695:android:fb0ff396be20016360d692",
+        "android_client_info": {
+          "package_name": "com.example.lagner2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "671769940695-e1tmu0lc2hscp88lv407nvmjc35ttass.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lagner2",
+            "certificate_hash": "1c5b898ed2553407f42626853428875f35b43e61"
+          }
+        },
+        {
+          "client_id": "671769940695-e7pffp5h0jjo5krjcrdjs31rs450fdm0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRDGGgV00SdNpsHEIfc9yjvszSthaR3og"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "671769940695-e7pffp5h0jjo5krjcrdjs31rs450fdm0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -50,7 +50,6 @@ class HomeScreenState extends State<HomeScreen> {
 
   void registerNotification() {
     firebaseMessaging.requestNotificationPermissions();
-
     firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
       print('onMessage: $message');
       Platform.isAndroid
@@ -78,7 +77,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   void configLocalNotification() {
     var initializationSettingsAndroid =
-        new AndroidInitializationSettings('app_icon');
+        new AndroidInitializationSettings('lagner');
     var initializationSettingsIOS = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
@@ -96,11 +95,9 @@ class HomeScreenState extends State<HomeScreen> {
 
   void showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-      Platform.isAndroid
-          ? 'com.dfa.flutterchatdemo'
-          : 'com.duytq.flutterchatdemo',
-      'Flutter chat demo',
-      'your channel description',
+      Platform.isAndroid ? 'com.example.lagner2' : 'com.example.lagner2',
+      'Chat Multilingue',
+      'Aprende nuevos idiomas',
       playSound: true,
       enableVibration: true,
       importance: Importance.Max,
