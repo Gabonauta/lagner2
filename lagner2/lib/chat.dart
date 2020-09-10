@@ -5,13 +5,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_demo/const.dart';
-import 'package:flutter_chat_demo/widget/full_photo.dart';
-import 'package:flutter_chat_demo/widget/loading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:lagner2/widget/full_photo.dart';
+import 'package:lagner2/widget/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'const.dart';
 
 class Chat extends StatelessWidget {
   final String peerId;

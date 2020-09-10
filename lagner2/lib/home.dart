@@ -7,14 +7,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_demo/chat.dart';
-import 'package:flutter_chat_demo/const.dart';
-import 'package:flutter_chat_demo/settings.dart';
-import 'package:flutter_chat_demo/widget/loading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:lagner2/settings.dart';
+import 'package:lagner2/widget/loading.dart';
 
+import 'chat.dart';
+import 'const.dart';
 import 'main.dart';
 
 class HomeScreen extends StatefulWidget {
